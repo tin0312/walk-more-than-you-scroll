@@ -1,0 +1,22 @@
+{
+  "name": "walk-more-than-you-scroll",
+  "version": "0.0.1",
+  "description": "## Development",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tin0312/walk-more-than-you-scroll.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tin0312/walk-more-than-you-scroll/issues"
+  },
+  "homepage": "https://github.com/tin0312/walk-more-than-you-scroll#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.0.242"
+  }
+}
