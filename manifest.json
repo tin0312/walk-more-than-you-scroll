@@ -1,6 +1,6 @@
 {
-  "name": "Getting Started Example",
-  "description": "Build an Extension!",
+  "name": "Walk more than you scroll",
+  "description": "Track your scrolling activity in real-time, encouraging you to be mindful of your scrolling behavior, and walk more than you scroll",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
@@ -16,6 +16,10 @@
       "128": "/images/get_started128.png"
     }
   },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }],
   "icons": {
     "16": "/images/get_started16.png",
     "32": "/images/get_started32.png",
