@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			/* Styling for the tweet container */
+			.tweet-container {
+				border: 1px solid #ccc;
+				border-radius: 8px;
+				padding: 10px;
+				max-width: 400px;
+				margin: 0 auto;
+				font-family: Arial, sans-serif;
+				background-color: #f7f7f7;
+			}
+
+			/* Styling for the tweet content */
+			.tweet-content {
+				color: #333;
+				font-size: 16px;
+				line-height: 1.4;
+			}
+
+			/* Styling for the tweet username */
+			.tweet-username {
+				color: #1da1f2;
+				font-weight: bold;
+			}
+
+			/* Styling for the tweet timestamp */
+			.tweet-timestamp {
+				color: #999;
+				font-size: 14px;
+			}
+
+			/* Styling for the tweet actions (e.g., like, retweet, reply) */
+			.tweet-actions {
+				display: flex;
+				justify-content: space-between;
+				margin-top: 10px;
+			}
+
+			/* Styling for individual tweet action buttons */
+			.tweet-action-btn {
+				color: #999;
+				cursor: pointer;
+			}
+
+			/* Styling for the tweet action icons (you can use appropriate icons here) */
+			.tweet-action-icon {
+				margin-right: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+			const body = document.querySelector('body');
+			const tweet = `
+      <div class="tweet-container">
+      <div class="tweet-content">
+        <span class="tweet-username">JohnDoe</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eu dolor eget odio mollis varius vel eget libero.
+      </div>
+      <div class="tweet-timestamp">2 hours ago</div>
+      <div class="tweet-actions">
+        <div class="tweet-action-btn">
+          <span class="tweet-action-icon">❤️</span> Like
+        </div>
+        <div class="tweet-action-btn">
+          <span class="tweet-action-icon">🔄</span> Retweet
+        </div>
+        <div class="tweet-action-btn">
+          <span class="tweet-action-icon">💬</span> Reply
+        </div>
+      </div>
+      </div>`;
+      const container = document.createElement('div');
+      container.classList.add('container');
+      container.style.margin = '4px';
+      container.innerHTML = tweet;
+
+      function loadTweets() {
+        const tweetNumber = 50;
+        for (let i = 0; i < tweetNumber; i++) {
+          body.appendChild(container.cloneNode(true));
+        }
+      }
+
+      window.addEventListener('load', loadTweets);
+
+      // add more tweets when page is scrolled to the bottom
+      window.addEventListener('scroll', () => {
+        if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+          loadTweets();
+        }
+      });
+		</script>
+	</body>
+</html>
