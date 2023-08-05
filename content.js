@@ -19,15 +19,16 @@ const updateScrollDistance = () => {
 
 window.addEventListener('scroll', updateScrollDistance);
 
-let saveTimeout = null;
-
 /**
  * Debounce saving scroll distance to local storage
  */
-function saveDistance(distance) {
-	clearTimeout(saveTimeout);
-	saveTimeout = setTimeout(() => {
-		console.log(distance);
-		chrome.storage.local.set({ distance });
-	}, saveTimeout);
-}
+const saveDistance = (() => {
+	let saveTimeout = null;
+	return function (distance) {
+		clearTimeout(saveTimeout);
+		saveTimeout = setTimeout(() => {
+			console.log(distance);
+			chrome.storage.local.set({ distance });
+		}, 3000);
+	};
+})();
