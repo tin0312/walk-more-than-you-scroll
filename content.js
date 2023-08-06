@@ -1,6 +1,7 @@
 const initialScrollPosition = window.scrollY;
 
-console.log('Initial scroll position: ', initialScrollPosition);
+const site = window.location.hostname;
+console.log(site);
 
 let lastScrollPosition = initialScrollPosition;
 let scrollDistance = 0;
@@ -27,8 +28,10 @@ const saveDistance = (() => {
 	return function (distance) {
 		clearTimeout(saveTimeout);
 		saveTimeout = setTimeout(() => {
-			console.log(distance);
+			if (!isValidContext()) return;
 			chrome.storage.local.set({ distance });
 		}, 3000);
 	};
 })();
+
+const isValidContext = () => !!chrome.runtime?.id;

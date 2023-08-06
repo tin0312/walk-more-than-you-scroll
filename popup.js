@@ -11,8 +11,8 @@ chrome.storage.local.get('distance', ({ distance }) => {
  */
 function pixelToCm(px) {
 	const DPI = 96; // Assumed dpi value for desktops, there is no way to correctly determine screen DPI
+	const INCH_TO_CM = 2.54;
 
 	const lengthInInch = px / DPI;
-	const INCH_TO_CM = 2.54;
 	return lengthInInch * INCH_TO_CM;
 }
