@@ -1,8 +1,8 @@
 // Initialize button with users' preferred color
 const counter = document.getElementById('distance');
 
-chrome.storage.local.get('distance', ({ distance }) => {
-	const distanceCM = pixelToCm(distance).toFixed(0);
+chrome.storage.local.get('totalDistance', ({ totalDistance }) => {
+	const distanceCM = pixelToCm(totalDistance).toFixed(0);
 	counter.innerText = `Scroll distance: ${distanceCM} cm`;
 });
 
