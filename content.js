@@ -26,8 +26,8 @@ const updateScrollDistance = () => {
 };
 
 const updateLiveCounter = (distance) => {
-	const distanceCM = pixelToCm(distance).toFixed(0);
-	liveCounter.innerHTML = `${distanceCM} cm `;
+	const distanceMeter = pixelToMeter(distance).toFixed(2);
+	liveCounter.innerHTML = `${distanceMeter} m `;
 };
 
 window.addEventListener('scroll', updateScrollDistance);
@@ -74,10 +74,10 @@ const saveDistance = (() => {
 
 const isContextInvalidated = () => !chrome.runtime?.id;
 
-function pixelToCm(px) {
+function pixelToMeter(px) {
 	const DPI = 96; // Assumed dpi value for desktops, there is no way to correctly determine screen DPI
-
+	const INCH_PER_METTER = 39.37; // 1 inch = 39.37 cm
 	const lengthInInch = px / DPI;
-	const INCH_TO_CM = 2.54;
-	return lengthInInch * INCH_TO_CM;
+	const lenghthInMetter = lengthInInch / INCH_PER_METTER; 
+	return lenghthInMetter;
 }
