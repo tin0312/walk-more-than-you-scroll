@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 /* global pixelToMeter, debounce */
+=======
+>>>>>>> 6e8dd82 (Formatting rules updated)
 const liveCounter = document.createElement('div');
 liveCounter.classList.add('scroll-counter');
 
@@ -65,7 +68,36 @@ const saveDistance = (() => {
   return function (domain, distance) {
     if (isContextInvalidated()) return;
     scrolledDistance += distance;
+<<<<<<< HEAD
     save(domain, distance);
+=======
+
+    saveTimeout = setTimeout(() => {
+      chrome.storage.local.get(
+        ['totalDistance', 'scrollStats'],
+        ({ totalDistance, scrollStats }) => {
+          console.log(scrollStats);
+          totalDistance = totalDistance || 0;
+          scrollStats = scrollStats || {};
+          const stats = scrollStats[domain] || {
+            distance: 0,
+          };
+          scrollStats[domain] = stats;
+          chrome.storage.local.set({
+            totalDistance: totalDistance + scrolledDistance,
+
+            scrollStats: {
+              ...scrollStats,
+              [domain]: {
+                distance: scrollStats[domain].distance + scrolledDistance,
+              },
+            },
+          });
+          scrolledDistance = 0;
+        }
+      );
+    }, timeout);
+>>>>>>> 6e8dd82 (Formatting rules updated)
   };
 })();
 

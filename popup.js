@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* global pixelToMeter */
 
 const counter_elem = $('#distance');
@@ -9,6 +10,14 @@ chrome.storage.local.get(['totalDistance', 'scrollStats'], ({ totalDistance, scr
   const stats = Object.entries(scrollStats);
   const top3 = stats.sort(([, { distance: a }], [, { distance: b }]) => b - a).slice(0, 3);
   updateScrollDistances(top3);
+=======
+// Initialize button with users' preferred color
+const counter = document.getElementById('distance');
+
+chrome.storage.local.get('totalDistance', ({ totalDistance }) => {
+  const distanceMeter = pixelToMeter(totalDistance).toFixed(2);
+  counter.innerText = `Scroll distance: ${distanceMeter} m`;
+>>>>>>> 6e8dd82 (Formatting rules updated)
 });
 
 function updateScrollDistances(scrollDistances) {
