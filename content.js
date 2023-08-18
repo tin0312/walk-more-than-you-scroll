@@ -1,3 +1,5 @@
+/* global pixelToMeter */
+
 const liveCounter = document.createElement('div');
 liveCounter.classList.add('scroll-counter');
 

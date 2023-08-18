@@ -1,3 +1,4 @@
+/* global pixelToMeter */
 // Initialize button with users' preferred color
 const counter = document.getElementById('distance');
 
