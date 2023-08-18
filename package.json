@@ -10,7 +10,7 @@
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier . --check",
     "prettier:fix": "npm run prettier -- --write",
-    "format": "npx prettier --write . && npm run lint:fix"
+    "format": "npx prettier --write ."
   },
   "repository": {
     "type": "git",
