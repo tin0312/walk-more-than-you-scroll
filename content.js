@@ -1,5 +1,5 @@
-const liveCounter = document.createElement("div");
-liveCounter.classList.add("scroll-counter");
+const liveCounter = document.createElement('div');
+liveCounter.classList.add('scroll-counter');
 
 document.body.appendChild(liveCounter);
 
@@ -9,7 +9,7 @@ const initialScrollPosition = window.scrollY;
 let lastScrollPosition = initialScrollPosition;
 let scrollDistance = 0;
 
-chrome.storage.local.get("scrollStats", ({ scrollStats }) => {
+chrome.storage.local.get('scrollStats', ({ scrollStats }) => {
   if (!scrollStats) return;
   scrollDistance = scrollStats[websiteDomain]?.distance || 0;
   updateLiveCounter(scrollDistance);
@@ -30,7 +30,7 @@ const updateLiveCounter = (distance) => {
   liveCounter.innerHTML = `${distanceMeter}m `;
 };
 
-window.addEventListener("scroll", updateScrollDistance);
+window.addEventListener('scroll', updateScrollDistance);
 
 /**
  * Debounce saving scroll distance to local storage
@@ -46,7 +46,7 @@ const saveDistance = (() => {
 
     saveTimeout = setTimeout(() => {
       chrome.storage.local.get(
-        ["totalDistance", "scrollStats"],
+        ['totalDistance', 'scrollStats'],
         ({ totalDistance, scrollStats }) => {
           console.log(scrollStats);
           totalDistance = totalDistance || 0;
