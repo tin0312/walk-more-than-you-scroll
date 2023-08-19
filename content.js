@@ -1,5 +1,4 @@
-/* global pixelToMeter */
-
+/* global pixelToMeter, debounce */
 const liveCounter = document.createElement('div');
 liveCounter.classList.add('scroll-counter');
 
@@ -28,8 +27,8 @@ const updateScrollDistance = () => {
 };
 
 const updateLiveCounter = (distance) => {
-  const distanceMeter = pixelToMeter(distance).toFixed(2);
-  liveCounter.innerHTML = `${distanceMeter}m `;
+  const distanceMeter = pixelToMeter(distance);
+  liveCounter.innerHTML = `${distanceMeter}m`;
 };
 
 window.addEventListener('scroll', updateScrollDistance);
@@ -39,38 +38,34 @@ window.addEventListener('scroll', updateScrollDistance);
  */
 const saveDistance = (() => {
   const timeout = 1000;
-  let saveTimeout = null;
   let scrolledDistance = 0;
+
+  const save = debounce(function (domain) {
+    chrome.storage.local.get(['totalDistance', 'scrollStats'], ({ totalDistance, scrollStats }) => {
+      totalDistance = totalDistance || 0;
+      scrollStats = scrollStats || {};
+      const stats = scrollStats[domain] || {
+        distance: 0,
+      };
+      scrollStats[domain] = stats;
+      chrome.storage.local.set({
+        totalDistance: totalDistance + scrolledDistance,
+
+        scrollStats: {
+          ...scrollStats,
+          [domain]: {
+            distance: scrollStats[domain].distance + scrolledDistance,
+          },
+        },
+      });
+      scrolledDistance = 0;
+    });
+  }, timeout);
+
   return function (domain, distance) {
     if (isContextInvalidated()) return;
-    clearTimeout(saveTimeout);
     scrolledDistance += distance;
-
-    saveTimeout = setTimeout(() => {
-      chrome.storage.local.get(
-        ['totalDistance', 'scrollStats'],
-        ({ totalDistance, scrollStats }) => {
-          console.log(scrollStats);
-          totalDistance = totalDistance || 0;
-          scrollStats = scrollStats || {};
-          const stats = scrollStats[domain] || {
-            distance: 0,
-          };
-          scrollStats[domain] = stats;
-          chrome.storage.local.set({
-            totalDistance: totalDistance + scrolledDistance,
-
-            scrollStats: {
-              ...scrollStats,
-              [domain]: {
-                distance: scrollStats[domain].distance + scrolledDistance,
-              },
-            },
-          });
-          scrolledDistance = 0;
-        }
-      );
-    }, timeout);
+    save(domain, distance);
   };
 })();
 

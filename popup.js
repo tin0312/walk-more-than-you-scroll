@@ -6,28 +6,21 @@ const stats_elem = $('#stats');
 chrome.storage.local.get(['totalDistance', 'scrollStats'], ({ totalDistance, scrollStats }) => {
   updateDistance(totalDistance);
 
-  // list the scroll distance for each domain
-  if (!scrollStats || !stats_elem) return;
-
   const stats = Object.entries(scrollStats);
   const top3 = stats.sort(([, { distance: a }], [, { distance: b }]) => b - a).slice(0, 3);
   updateScrollDistances(top3);
 });
 
 function updateScrollDistances(scrollDistances) {
-  scrollDistances.foreach(([domain, { distance }]) => {
-    const distanceInMeter = pixelToMeter(distance).toFixed(2);
-    const text = `${domain}: ${distanceInMeter} cm`;
+  scrollDistances.forEach(([domain, { distance }]) => {
+    const distanceInMeter = pixelToMeter(distance);
     const li = $('<li></li>');
-    li.text(text);
-    // list.appendChild(li);
+    li.text(`${domain}: ${distanceInMeter}m`);
     stats_elem.append(li);
   });
 }
 
 function updateDistance(distance) {
-  if (counter_elem) {
-    const distanceMeter = pixelToMeter(distance).toFixed(2);
-    counter_elem.text(`Scroll distance: ${distanceMeter} m`);
-  }
+  const distanceMeter = pixelToMeter(distance);
+  counter_elem.text(`Scroll distance: ${distanceMeter} m`);
 }

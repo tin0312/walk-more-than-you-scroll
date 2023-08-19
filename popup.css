@@ -4,3 +4,8 @@ body {
   width: 200px;
   height: 50px;
 }
+
+#stats {
+  list-style-type: none;
+  padding: 0;
+}
