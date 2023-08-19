@@ -5,7 +5,12 @@
   "main": "background.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier . --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npx prettier --write . && npm run lint:fix"
   },
   "repository": {
     "type": "git",
@@ -18,6 +23,9 @@
   },
   "homepage": "https://github.com/tin0312/walk-more-than-you-scroll#readme",
   "devDependencies": {
-    "@types/chrome": "^0.0.242"
+    "@types/chrome": "^0.0.242",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "3.0.2"
   }
 }

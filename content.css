@@ -1,7 +1,7 @@
 .scroll-counter {
-	z-index: 2147483647;
-	position: fixed;
-	top: 0;
-	right: 0;
-	color: green;
+  z-index: 2147483647;
+  position: fixed;
+  top: 0;
+  right: 0;
+  color: green;
 }
