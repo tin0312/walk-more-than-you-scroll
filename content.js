@@ -37,8 +37,8 @@ window.addEventListener('scroll', updateScrollDistance);
  * Debounce saving scroll distance to local storage
  */
 const saveDistance = (() => {
-  const timeout = 1000;
-  let scrolledDistance = 0;
+  const DEBOUNCE_TIMEOUT = 1000;
+  let scrollDistance = 0;
 
   const save = debounce(function (domain) {
     chrome.storage.local.get(['totalDistance', 'scrollStats'], ({ totalDistance, scrollStats }) => {
@@ -49,24 +49,26 @@ const saveDistance = (() => {
       };
       scrollStats[domain] = stats;
       chrome.storage.local.set({
-        totalDistance: totalDistance + scrolledDistance,
+        totalDistance: totalDistance + scrollDistance,
 
         scrollStats: {
           ...scrollStats,
           [domain]: {
-            distance: scrollStats[domain].distance + scrolledDistance,
+            distance: scrollStats[domain].distance + scrollDistance,
           },
         },
       });
-      scrolledDistance = 0;
+      scrollDistance = 0;
     });
-  }, timeout);
+  }, DEBOUNCE_TIMEOUT);
 
   return function (domain, distance) {
+    // chrome storage is unavailable if the content is invalidated
     if (isContextInvalidated()) return;
-    scrolledDistance += distance;
+    scrollDistance += distance;
     save(domain, distance);
   };
 })();
 
+// if the extension is reloaded, the context is invalidated and the page needs to be reloaded
 const isContextInvalidated = () => !chrome.runtime?.id;
