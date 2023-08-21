@@ -1,12 +1,12 @@
-/* global pixelToMeter */
+/* global pixelToMeter, stats */
 
 const counter_elem = $('#distance');
 const stats_elem = $('#stats');
 
-chrome.storage.local.get(['totalDistance', 'scrollStats'], ({ totalDistance, scrollStats }) => {
+stats.getTodayStats().then(({ totalDistance, domains }) => {
   updateDistance(totalDistance);
 
-  const stats = Object.entries(scrollStats);
+  const stats = Object.entries(domains);
   const top3 = stats.sort(([, { distance: a }], [, { distance: b }]) => b - a).slice(0, 3);
   updateScrollDistances(top3);
 });

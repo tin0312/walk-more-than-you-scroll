@@ -1,4 +1,5 @@
-/* global pixelToMeter, debounce */
+/* global pixelToMeter, debounce, stats */
+
 const liveCounter = document.createElement('div');
 liveCounter.classList.add('scroll-counter');
 
@@ -10,9 +11,8 @@ const initialScrollPosition = window.scrollY;
 let lastScrollPosition = initialScrollPosition;
 let scrollDistance = 0;
 
-chrome.storage.local.get('scrollStats', ({ scrollStats }) => {
-  if (!scrollStats) return;
-  scrollDistance = scrollStats[websiteDomain]?.distance || 0;
+stats.getDomainDistance(websiteDomain).then((distance) => {
+  scrollDistance = distance;
   updateLiveCounter(scrollDistance);
 });
 
@@ -41,23 +41,7 @@ const saveDistance = (() => {
   let scrollDistance = 0;
 
   const save = debounce(function (domain) {
-    chrome.storage.local.get(['totalDistance', 'scrollStats'], ({ totalDistance, scrollStats }) => {
-      totalDistance = totalDistance || 0;
-      scrollStats = scrollStats || {};
-      const stats = scrollStats[domain] || {
-        distance: 0,
-      };
-      scrollStats[domain] = stats;
-      chrome.storage.local.set({
-        totalDistance: totalDistance + scrollDistance,
-
-        scrollStats: {
-          ...scrollStats,
-          [domain]: {
-            distance: scrollStats[domain].distance + scrollDistance,
-          },
-        },
-      });
+    stats.updateDistance(domain, scrollDistance).then(() => {
       scrollDistance = 0;
     });
   }, DEBOUNCE_TIMEOUT);
