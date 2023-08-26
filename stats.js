@@ -32,6 +32,25 @@ const stats = {
     return stats.updateDayStats(date, dayStats);
   },
 
+  getWeeklyStats: async () => {
+    const today = new Date();
+    const { days } = await chrome.storage.local.get(['days']);
+    let week = [];
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      const scrollDistance = days[date.toLocaleDateString()]?.totalDistance || 0;
+      week.push(scrollDistance);
+      if (date.getDay() === 0) break;
+    }
+
+    while (week.length < 7) {
+      week.splice(0, 0, 0);
+    }
+
+    return week.reverse();
+  },
+
   /** @type {(date: string) => Promise<DayStats>} */
   getDayStats: async (date) => {
     const { days } = await chrome.storage.local.get(['days']);

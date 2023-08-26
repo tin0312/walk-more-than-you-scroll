@@ -1,4 +1,4 @@
-/* global pixelToMeter, stats */
+/* global pixelToMeter, stats, createSummary */
 
 const counter_elem = $('#distance');
 const stats_elem = $('#stats');
@@ -21,6 +21,19 @@ function updateScrollDistances(scrollDistances) {
 }
 
 function updateDistance(distance) {
-  const distanceMeter = pixelToMeter(distance);
-  counter_elem.text(`Scroll distance: ${distanceMeter} m`);
+  const distanceMeter = pixelToMeter(distance, 0);
+  const today = new Date();
+  const month = today.toLocaleString('default', { month: 'short' });
+  const date = today.getDate();
+  // Ex: Today, Aug 26
+  const day = `Today, ${month} ${date}`;
+  counter_elem.html(`
+    <div >
+      <span class="day">${day}</span>
+      <br>
+      <span class="distance">${distanceMeter}m</span>
+    </div>
+  `);
 }
+
+createSummary();
