@@ -23,3 +23,6 @@ body {
 #distance {
   font-size: 1.5rem;
 }
+#paused-text {
+  color: red;
+}
