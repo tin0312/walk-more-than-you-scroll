@@ -1,6 +1,6 @@
 /* global pixelToMeter, stats */
 
-const counter_elem = $('#distance');
+const header_elem = $('#header');
 const stats_elem = $('#stats');
 
 stats.getTodayStats().then(({ totalDistance, domains }) => {
@@ -21,6 +21,17 @@ function updateScrollDistances(scrollDistances) {
 }
 
 function updateDistance(distance) {
-  const distanceMeter = pixelToMeter(distance);
-  counter_elem.text(`Scroll distance: ${distanceMeter} m`);
+  const distanceMeter = pixelToMeter(distance, 0);
+  const today = new Date();
+  const month = today.toLocaleString('default', { month: 'short' });
+  const date = today.getDate();
+  // Ex: Today, Aug 26
+  const day = `Today, ${month} ${date}`;
+  header_elem.html(`
+    <div >
+      <span id="day">${day}</span>
+      <br>
+      <span id="distance">${distanceMeter}m</span>
+    </div>
+  `);
 }

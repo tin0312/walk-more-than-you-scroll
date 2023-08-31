@@ -1,4 +1,6 @@
 .scroll-counter {
+  font-family: lexend, sans-serif;
+  font-size: 16px;
   z-index: 2147483647;
   position: fixed;
   top: 0;
