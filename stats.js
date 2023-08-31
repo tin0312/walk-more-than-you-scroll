@@ -40,7 +40,11 @@ const stats = {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
       const scrollDistance = days[date.toLocaleDateString()]?.totalDistance || 0;
-      week.push(scrollDistance);
+      week.push({
+        distance: scrollDistance,
+        date: date.toLocaleDateString(),
+        day: date.getDay(),
+      });
       if (date.getDay() === 0) break;
     }
 

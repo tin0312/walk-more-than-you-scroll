@@ -1,6 +1,6 @@
-/* global pixelToMeter, stats, createSummary */
+/* global pixelToMeter, stats */
 
-const counter_elem = $('#distance');
+const header_elem = $('#header');
 const stats_elem = $('#stats');
 
 stats.getTodayStats().then(({ totalDistance, domains }) => {
@@ -27,13 +27,11 @@ function updateDistance(distance) {
   const date = today.getDate();
   // Ex: Today, Aug 26
   const day = `Today, ${month} ${date}`;
-  counter_elem.html(`
+  header_elem.html(`
     <div >
-      <span class="day">${day}</span>
+      <span id="day">${day}</span>
       <br>
-      <span class="distance">${distanceMeter}m</span>
+      <span id="distance">${distanceMeter}m</span>
     </div>
   `);
 }
-
-createSummary();
