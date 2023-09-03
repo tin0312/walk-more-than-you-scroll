@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* global Chart, stats, pixelToMeter */
+/* global Chart, stats, pixelToMeter, updateDistance */
 
 async function createSummary() {
   /** @type {Chart} */
@@ -63,6 +63,13 @@ async function createSummary() {
       if (chartElements.length > 0) {
         const clickedBarIndex = chartElements[0].index;
         focusedDay = clickedBarIndex;
+        const selectedDate = new Date();
+        selectedDate.setDate(selectedDate.getDate() - (todayIndex - clickedBarIndex));
+
+        stats.getTotalDistance(selectedDate.toLocaleDateString()).then((distance) => {
+          updateDistance(selectedDate, distance);
+        });
+
         chart.update();
       }
     },
