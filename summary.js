@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-/* global Chart, stats, pixelToMeter, updateDistance */
+/* global Chart, stats, pixelToMeter, updateDistance, updateScrollDistances */
 
 async function createSummary() {
   /** @type {Chart} */
@@ -68,6 +68,11 @@ async function createSummary() {
 
         stats.getTotalDistance(selectedDate).then((distance) => {
           updateDistance(selectedDate, distance);
+        });
+
+        stats.getDayStats(selectedDate).then(({ totalDistance, domains }) => {
+          updateDistance(new Date(), totalDistance);
+          updateScrollDistances(domains);
         });
 
         chart.update();

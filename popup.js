@@ -5,14 +5,14 @@ const stats_elem = $('#stats');
 
 stats.getTodayStats().then(({ totalDistance, domains }) => {
   updateDistance(new Date(), totalDistance);
-
-  const stats = Object.entries(domains);
-  const top3 = stats.sort(([, { distance: a }], [, { distance: b }]) => b - a).slice(0, 3);
-  updateScrollDistances(top3);
+  updateScrollDistances(domains);
 });
 
-function updateScrollDistances(scrollDistances) {
-  scrollDistances.forEach(([domain, { distance }]) => {
+function updateScrollDistances(domains) {
+  const stats = Object.entries(domains);
+  const top3 = stats.sort(([, { distance: a }], [, { distance: b }]) => b - a).slice(0, 3);
+  stats_elem.html("");
+  top3.forEach(([domain, { distance }]) => {
     const distanceInMeter = pixelToMeter(distance);
     const li = $('<li></li>');
     li.text(`${domain}: ${distanceInMeter}m`);

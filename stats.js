@@ -55,7 +55,7 @@ const stats = {
     return week.reverse();
   },
 
-  /** @type {(date: string) => Promise<DayStats>} */
+  /** @type {(date: Date) => Promise<DayStats>} */
   getDayStats: async (date) => {
     const { days } = await chrome.storage.local.get(['days']);
     const dateString = date.toLocaleDateString();
