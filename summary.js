@@ -2,20 +2,27 @@
 /* global Chart, stats, pixelToMeter */
 
 async function createSummary() {
-  // set example data
+  /** @type {Chart} */
+  let chart;
   const weekData = await stats.getWeeklyStats();
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const todayIndex = new Date().getDay();
+  let focusedDay = todayIndex;
+  const isFocused = (index) => index === focusedDay;
+
   /** @type {Chart.ChartData} */
   const data = {
     labels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
     datasets: [
       {
-        label: 'Daily summary',
-        backgroundColor: 'rgba(9, 132, 255, 0.7)',
-        borderColor: 'rgba(9, 132, 255, 0.9)',
-        borderWidth: 2,
-        hoverBackgroundColor: '#40F8FF',
+        label: 'Daily scroll distance',
+        // highlight the selected day, gray out the rest
+        backgroundColor: ({ dataIndex }) => (isFocused(dataIndex) ? '#0984FF' : '#B9B4C7'),
+        borderColor: ({ dataIndex }) => (isFocused(dataIndex) ? '#0984FF' : '#B9B4C7'),
+        borderWidth: 1,
         data: weekData.map(({ distance }) => pixelToMeter(distance)),
+        minBarLength: 2,
       },
     ],
   };
@@ -26,6 +33,9 @@ async function createSummary() {
       text: 'Summary',
     },
     plugins: {
+      legend: {
+        onClick: () => {},
+      },
       tooltip: {
         callbacks: {
           title: (tooltipItem) => {
@@ -41,7 +51,6 @@ async function createSummary() {
         stacked: true,
         grid: {
           display: true,
-          color: 'rgba(255,99,132,0.2)',
         },
       },
       x: {
@@ -50,13 +59,20 @@ async function createSummary() {
         },
       },
     },
+    onClick: (event, chartElements) => {
+      if (chartElements.length > 0) {
+        const clickedBarIndex = chartElements[0].index;
+        focusedDay = clickedBarIndex;
+        chart.update();
+      }
+    },
   };
 
-  new Chart('scroll-summary', {
+  return (chart = new Chart('scroll-summary', {
     type: 'bar',
     options: options,
     data: data,
-  });
+  }));
 }
 
 createSummary();
