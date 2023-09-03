@@ -66,12 +66,8 @@ async function createSummary() {
         const selectedDate = new Date();
         selectedDate.setDate(selectedDate.getDate() - (todayIndex - clickedBarIndex));
 
-        stats.getTotalDistance(selectedDate).then((distance) => {
-          updateDistance(selectedDate, distance);
-        });
-
         stats.getDayStats(selectedDate).then(({ totalDistance, domains }) => {
-          updateDistance(new Date(), totalDistance);
+          updateDistance(selectedDate, totalDistance);
           updateScrollDistances(domains);
         });
 

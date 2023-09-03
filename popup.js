@@ -11,7 +11,7 @@ stats.getTodayStats().then(({ totalDistance, domains }) => {
 function updateScrollDistances(domains) {
   const stats = Object.entries(domains);
   const top3 = stats.sort(([, { distance: a }], [, { distance: b }]) => b - a).slice(0, 3);
-  stats_elem.html("");
+  stats_elem.html('');
   top3.forEach(([domain, { distance }]) => {
     const distanceInMeter = pixelToMeter(distance);
     const li = $('<li></li>');
@@ -25,6 +25,7 @@ function updateDistance(date, distance) {
   const month = date.toLocaleString('default', { month: 'short' });
   const dateNum = date.getDate();
   const today = new Date();
+
   // if today then show 'Today', if yesterday then show 'Yesterday', else show the day of week
   const day =
     date.toDateString() === today.toDateString()
