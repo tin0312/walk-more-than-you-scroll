@@ -66,7 +66,7 @@ async function createSummary() {
         const selectedDate = new Date();
         selectedDate.setDate(selectedDate.getDate() - (todayIndex - clickedBarIndex));
 
-        stats.getTotalDistance(selectedDate.toLocaleDateString()).then((distance) => {
+        stats.getTotalDistance(selectedDate).then((distance) => {
           updateDistance(selectedDate, distance);
         });
 
