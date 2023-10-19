@@ -2,8 +2,10 @@
 
 const header_elem = $('#header');
 const stats_elem = $('#stats');
+let isPaused = false;
+let isResume = false;
 
-stats.getTodayStats().then(({ totalDistance, domains }) => {
+stats.getTodayStats().then(({ dayStats: { totalDistance, domains } }) => {
   updateDistance(new Date(), totalDistance);
   updateScrollDistances(domains);
 });
@@ -42,3 +44,39 @@ function updateDistance(date, distance) {
     </div>
   `);
 }
+// add current website to list of paused websites
+document.getElementById('pause-current-site')?.addEventListener('click', () => {
+  const pausedText = $('<span id = "paused-text"> (paused) </span>');
+  if (!isPaused) {
+    stats.pauseCurrentSite();
+    header_elem.find('#distance').after(pausedText);
+    isPaused = true;
+  }
+});
+// remove current website from list of paused websites
+document.getElementById('resume-current-site')?.addEventListener('click', () => {
+  const pausedText = $('#paused-text');
+  if (!isResume) {
+    stats.unpauseCurrentSite();
+    pausedText.remove();
+    isResume = true;
+  }
+});
+// add all current sites in list of paused websites
+document.getElementById('pause-all-sites')?.addEventListener('click', () => {
+  const pausedText = $('<span id = "paused-text"> (paused) </span>');
+  if (!isPaused) {
+    stats.pauseAllSites();
+    header_elem.find('#distance').after(pausedText);
+    isPaused = true;
+  }
+});
+// remove all current sites from list of paused websites
+document.getElementById('resume-all-sites')?.addEventListener('click', () => {
+  const pausedText = $('#paused-text');
+  if (!isResume) {
+    stats.resumeAllSites();
+    pausedText.remove();
+    isResume = true;
+  }
+});
